@@ -7,10 +7,10 @@
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["Zook"],
+  "authorList": ["Zook", "brachy84"],
   "credits": "Spaghetti",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": []
+  "dependencies": ["gregtech"]
 }
 ]
