@@ -2,8 +2,6 @@
 
 import mods.gregtech.StoneType;
 import mods.gregtech.material.MaterialBuilder;
-import mods.gregtech.material.Material;
-import crafttweaker.block.IBlockState;
 
 // first create stone material
 // MUST HAVE DUST, INGOT OR GEM PROPERTY

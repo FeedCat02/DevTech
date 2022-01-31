@@ -1,6 +1,6 @@
 package com.zook.devtech.api.machines;
 
-import com.zook.devtech.common.machines.MachineRegistry;
+import com.zook.devtech.common.machines.CTMachineBuilder;
 import com.zook.devtech.common.machines.MachineRenderer;
 import crafttweaker.annotations.ZenRegister;
 import gregtech.client.renderer.ICubeRenderer;
@@ -9,7 +9,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
 
 import javax.annotation.Nullable;
 
-@ZenClass("mods.gregtech.MachineRenderer")
+@ZenClass("mods.gregtech.machine.Renderer")
 @ZenRegister
 public interface IMachineRenderer {
 
@@ -21,7 +21,7 @@ public interface IMachineRenderer {
     @Nullable
     @ZenMethod
     static IMachineRenderer get(String name) {
-        return MachineRegistry.RENDERER_MAP.get(name);
+        return CTMachineBuilder.RENDERER_MAP.get(name);
     }
 
     ICubeRenderer getActualRenderer();

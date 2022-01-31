@@ -1,37 +1,32 @@
 package com.zook.devtech.api.machines;
 
-import com.zook.devtech.common.machines.MachineRegistry;
+import com.zook.devtech.common.machines.CTMachine;
 import crafttweaker.annotations.ZenRegister;
-import gregtech.api.recipes.RecipeMap;
-import gregtech.api.recipes.builders.FuelRecipeBuilder;
-import stanhebben.zenscript.annotations.Optional;
 import stanhebben.zenscript.annotations.ZenClass;
+import stanhebben.zenscript.annotations.ZenGetter;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 /**
- * loader gregtech
+ * loader crafttweaker
  */
-@ZenClass("mods.gregtech.Machine")
+@ZenClass("mods.gregtech.machine.Machine")
 @ZenRegister
 public interface IMachine {
 
     @ZenMethod
-    static void createSimple(int id, String name, RecipeMap<?> recipeMap, String renderer, int tier) {
-        MachineRegistry.createSimple(id, name, recipeMap, renderer, tier);
+    static IMachine getMachine(String name) {
+        return CTMachine.createFromName(name);
     }
 
     @ZenMethod
-    static void createSimple(int id, String name, RecipeMap<?> recipeMap, IMachineRenderer renderer, int tier) {
-        MachineRegistry.createSimple(id, name, recipeMap, renderer, tier);
+    static IMachine getMachine(int id) {
+        return CTMachine.createForId(id);
     }
 
-    @ZenMethod
-    static void createSimpleGenerator(int id, String name, RecipeMap<FuelRecipeBuilder> recipeMap, String renderer, int tier, @Optional boolean canHandleOutputs) {
-        MachineRegistry.createSimpleGenerator(id, name, recipeMap, renderer, tier, canHandleOutputs);
-    }
+    @ZenGetter("id")
+    int getIntId();
 
-    @ZenMethod
-    static void createSimpleGenerator(int id, String name, RecipeMap<FuelRecipeBuilder> recipeMap, IMachineRenderer renderer, int tier, @Optional boolean canHandleOutputs) {
-        MachineRegistry.createSimpleGenerator(id, name, recipeMap, renderer, tier, canHandleOutputs);
-    }
+    @ZenGetter("name")
+    String getName();
+
 }

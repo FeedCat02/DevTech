@@ -2,6 +2,8 @@ package com.zook.devtech;
 
 import codechicken.lib.CodeChickenLib;
 import gregtech.api.GTValues;
+import gregtech.api.recipes.RecipeMap;
+import gregtech.api.recipes.RecipeMaps;
 import gregtech.common.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -23,6 +25,8 @@ public class DevTech {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        // init recipe maps, so they are ready when ct asks for it
+        RecipeMap<?> recipeMap = RecipeMaps.ASSEMBLER_RECIPES;
     }
 
     @EventHandler

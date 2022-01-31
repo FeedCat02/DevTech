@@ -13,6 +13,9 @@ import java.util.function.Predicate;
 @ZenRegister
 public interface IMaterialPredicate extends Predicate<Material> {
 
+    @ZenMethod
+    boolean test(Material material);
+
     @Nonnull
     @ZenMethod
     @ZenOperator(OperatorType.OR)
@@ -35,11 +38,11 @@ public interface IMaterialPredicate extends Predicate<Material> {
     }
 
     @ZenProperty
-    IMaterialPredicate isFluid = mat -> mat.hasProperty(PropertyKey.FLUID);
+    IMaterialPredicate hasFluid = mat -> mat.hasProperty(PropertyKey.FLUID);
     @ZenProperty
-    IMaterialPredicate isDust = mat -> mat.hasProperty(PropertyKey.DUST);
+    IMaterialPredicate hasDust = mat -> mat.hasProperty(PropertyKey.DUST);
     @ZenProperty
-    IMaterialPredicate isGem = mat -> mat.hasProperty(PropertyKey.GEM);
+    IMaterialPredicate hasGem = mat -> mat.hasProperty(PropertyKey.GEM);
     @ZenProperty
-    IMaterialPredicate isIngot = mat -> mat.hasProperty(PropertyKey.INGOT);
+    IMaterialPredicate hasIngot = mat -> mat.hasProperty(PropertyKey.INGOT);
 }
