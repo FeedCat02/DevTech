@@ -53,6 +53,12 @@ public interface IMachineBuilder {
     IMachineBuilder addSteamTier(boolean highPressure, @Optional boolean bricked);
 
     @ZenMethod
+    IMachineBuilder setGenerator();
+
+    @ZenMethod
+    IMachineBuilder setMachine();
+
+    @ZenMethod
     IMachineBuilder setTankScalingFunction(ITankScalingFunction tankScalingFunction);
 
     @ZenMethod // Machines only
@@ -81,6 +87,9 @@ public interface IMachineBuilder {
 
     @ZenMethod
     IMachineBuilder setSteamConversionRate(boolean highPressure, double conversionRate);
+
+    @ZenMethod
+    IMachineBuilder setBoilerValues(boolean highPressure, int steamOutput, @Optional(valueLong = -1) int coolDownInterval, @Optional(valueLong = -1) int coolDownRate);
 
     @ZenMethod
     IMachineBuilder setSteamTankSize(boolean highPressure, int tankSize);

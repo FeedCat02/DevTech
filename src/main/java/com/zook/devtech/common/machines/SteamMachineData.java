@@ -14,6 +14,9 @@ public class SteamMachineData {
     public final TByteObjectMap<TextureArea> slotOverlays = new TByteObjectHashMap<>();
     public int tankSize = 8000;
     public double conversionRate = 1.0;
+    public int steamOutput = -1;
+    public int cooldownInterval = -1;
+    public int cooldownRate = -1;
 
     public void setSlotOverlay(boolean isOutput, boolean isFluid, TextureArea slotOverlay) {
         setSlotOverlay(isOutput, isFluid, false, slotOverlay);

@@ -15,11 +15,9 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.SimpleGeneratorMetaTileEntity;
 import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
 import gregtech.api.recipes.RecipeMap;
-import gregtech.api.recipes.builders.FuelRecipeBuilder;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
-import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.HashMap;
@@ -34,9 +32,7 @@ public class CTMachineBuilder implements IMachineBuilder {
 
     static {
         for (Map.Entry<String, ICubeRenderer> entry : Textures.CUBE_RENDERER_REGISTRY.entrySet()) {
-            if (entry.getValue() instanceof OrientedOverlayRenderer) {
-                RENDERER_MAP.put(entry.getKey(), new MachineRenderer(entry.getValue()));
-            }
+            RENDERER_MAP.put(entry.getKey(), new MachineRenderer(entry.getValue()));
         }
     }
 
@@ -48,6 +44,7 @@ public class CTMachineBuilder implements IMachineBuilder {
     private boolean hasFrontFacing;
     private boolean canHandleOutputs;
     private Function<Integer, Integer> tankScalingFunction;
+    private boolean generator;
     private SteamMachineData bronzeMachineData;
     private SteamMachineData steelMachineData;
 
@@ -127,6 +124,18 @@ public class CTMachineBuilder implements IMachineBuilder {
         return this;
     }
 
+    @Override
+    public IMachineBuilder setGenerator() {
+        generator = true;
+        return this;
+    }
+
+    @Override
+    public IMachineBuilder setMachine() {
+        generator = false;
+        return this;
+    }
+
     private SteamMachineData checkSteamData(boolean highPressure) {
         if (!highPressure) {
             if (bronzeMachineData == null) {
@@ -181,6 +190,14 @@ public class CTMachineBuilder implements IMachineBuilder {
     }
 
     @Override
+    public IMachineBuilder setBoilerValues(boolean highPressure, int steamOutput, int coolDownInterval, int coolDownRate) {
+        checkSteamData(highPressure).steamOutput = steamOutput;
+        checkSteamData(highPressure).cooldownInterval = coolDownInterval;
+        checkSteamData(highPressure).cooldownRate = coolDownRate;
+        return this;
+    }
+
+    @Override
     public IMachineBuilder setSteamTankSize(boolean highPressure, int tankSize) {
         checkSteamData(highPressure).tankSize = tankSize;
         return null;
@@ -210,7 +227,7 @@ public class CTMachineBuilder implements IMachineBuilder {
             return;
         }
 
-        if (recipeMap.recipeBuilder() instanceof FuelRecipeBuilder) {
+        if (generator) {
             if (this.tankScalingFunction == null) {
                 this.tankScalingFunction = GTUtility.genericGeneratorTankSizeFunction;
             }
@@ -258,6 +275,8 @@ public class CTMachineBuilder implements IMachineBuilder {
     }
 
     private void registerSteamBoiler(boolean highPressure) {
-
+        ResourceLocation rl = new ResourceLocation(DevTech.MODID, name + "." + (highPressure ? "steel" : "bronze"));
+        MetaTileEntity mte = new SimpleSteamBoiler(rl, recipeMap, renderer.getActualRenderer(), highPressure ? steelMachineData : bronzeMachineData);
+        GregTechAPI.MTE_REGISTRY.register(id + (highPressure ? 1 : 0), rl, mte);
     }
 }
