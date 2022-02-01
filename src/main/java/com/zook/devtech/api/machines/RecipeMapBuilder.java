@@ -4,6 +4,7 @@ import com.zook.devtech.common.machines.recipe.CTRecipeBuilder;
 import crafttweaker.annotations.ModOnly;
 import crafttweaker.annotations.ZenRegister;
 import eutros.multiblocktweaker.MultiblockTweaker;
+import eutros.multiblocktweaker.crafttweaker.gtwrap.interfaces.ISound;
 import eutros.multiblocktweaker.crafttweaker.gtwrap.interfaces.ITextureArea;
 import gnu.trove.map.TByteObjectMap;
 import gnu.trove.map.hash.TByteObjectHashMap;
@@ -11,8 +12,9 @@ import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.resources.TextureArea;
 import gregtech.api.gui.widgets.ProgressWidget;
 import gregtech.api.recipes.RecipeMap;
-import gregtech.client.renderer.texture.Textures;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import stanhebben.zenscript.annotations.Optional;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
@@ -27,6 +29,7 @@ public class RecipeMapBuilder {
     private final TByteObjectMap<TextureArea> slotOverlays = new TByteObjectHashMap<>();
     private ProgressWidget.MoveType moveType = ProgressWidget.MoveType.HORIZONTAL;
     private TextureArea progressBarTexture = GuiTextures.PROGRESS_BAR_ARROW;
+    private RecipeMap.IChanceFunction chanceFunction;
     private SoundEvent sound;
 
     public RecipeMapBuilder(String name) {
@@ -125,6 +128,28 @@ public class RecipeMapBuilder {
     }
 
     @ZenMethod
+    public RecipeMapBuilder setChanceFunction(RecipeMap.IChanceFunction chanceFunction) {
+        this.chanceFunction = chanceFunction;
+        return this;
+    }
+
+    @ZenMethod
+    public RecipeMapBuilder setSound(String name) {
+        ResourceLocation loc = new ResourceLocation(name);
+        SoundEvent sound = ForgeRegistries.SOUND_EVENTS.getValue(loc);
+        if (sound != null)
+            this.sound = sound;
+        return this;
+    }
+
+    @ModOnly(MultiblockTweaker.MOD_ID)
+    @ZenMethod
+    public RecipeMapBuilder setSound(ISound sound) {
+        this.sound = sound.getInternal();
+        return this;
+    }
+
+    @ZenMethod
     public RecipeMap<?> build() {
         RecipeMap<?> recipeMap = new RecipeMap<>(name,
                 minInputs,
@@ -140,9 +165,14 @@ public class RecipeMapBuilder {
         for (byte key : slotOverlays.keys()) {
             recipeMap.setSlotOverlay((key & 2) != 0, (key & 1) != 0, (key & 4) != 0, slotOverlays.get(key));
         }
-
         if (progressBarTexture != null && moveType != null) {
             recipeMap.setProgressBar(progressBarTexture, moveType);
+        }
+        if (chanceFunction != null) {
+            recipeMap.chanceFunction = chanceFunction;
+        }
+        if (sound != null) {
+            recipeMap.setSound(sound);
         }
         return recipeMap;
     }

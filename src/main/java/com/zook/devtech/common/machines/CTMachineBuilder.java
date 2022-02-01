@@ -112,6 +112,7 @@ public class CTMachineBuilder implements IMachineBuilder {
             CraftTweakerAPI.logError("Can't add tiers below 0. Machine ID: " + name + ", " + id);
             return this;
         }
+        maxTier++;
         for (int i = minTier; i < maxTier; i++) {
             this.tiers.add(i);
         }
@@ -204,14 +205,14 @@ public class CTMachineBuilder implements IMachineBuilder {
     }
 
     @Override
-    public IMachineBuilder setSlotOverlay(boolean highPressure, String path, boolean isOutput, boolean isFluid) {
-        checkSteamData(highPressure).setSlotOverlay(isOutput, isFluid, TextureArea.fullImage(path));
+    public IMachineBuilder setSlotOverlay(boolean highPressure, String path, boolean isOutput, boolean isFluid, boolean isLast) {
+        checkSteamData(highPressure).setSlotOverlay(isOutput, isFluid, isLast, TextureArea.fullImage(path));
         return this;
     }
 
     @Override
-    public IMachineBuilder setSlotOverlay(boolean highPressure, ITextureArea textureArea, boolean isOutput, boolean isFluid) {
-        checkSteamData(highPressure).setSlotOverlay(isOutput, isFluid, textureArea.getInternal());
+    public IMachineBuilder setSlotOverlay(boolean highPressure, ITextureArea textureArea, boolean isOutput, boolean isFluid, boolean isLast) {
+        checkSteamData(highPressure).setSlotOverlay(isOutput, isFluid, isLast, textureArea.getInternal());
         return this;
     }
 

@@ -60,8 +60,8 @@ public class SimpleSteamBoiler extends MetaTileEntity {
         if (data.cooldownInterval < 0) {
             data.cooldownInterval = data.highPressure ? 40 : 45;
         }
-        if (data.conversionRate < 0) {
-            data.conversionRate = 1;
+        if (data.cooldownRate < 0) {
+            data.cooldownRate = 1;
         }
         initializeInventory();
         this.workable = new BoilerRecipeLogic(this, recipeMap, data.highPressure, data.steamOutput, data.cooldownInterval, data.cooldownRate, steamTank, waterTank);

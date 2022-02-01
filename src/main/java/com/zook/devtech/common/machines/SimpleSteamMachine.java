@@ -39,8 +39,11 @@ public class SimpleSteamMachine extends SteamMetaTileEntity {
         if (data.moveType == null) {
             data.moveType = ProgressWidget.MoveType.HORIZONTAL;
         }
+        if (data.conversionRate < 0) {
+            data.conversionRate = 1;
+        }
         initializeInventory();
-        workableHandler = new RecipeLogicSteam(this, recipeMap, data.highPressure, steamFluidTank, 1);
+        workableHandler = new RecipeLogicSteam(this, recipeMap, data.highPressure, steamFluidTank, data.conversionRate);
     }
 
     @Override
