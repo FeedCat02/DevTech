@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class DevTech {
     public static final String MODID = "devtech";
     public static final String NAME = "DevTech";
-    public static final String VERSION = "2.0.1";
+    public static final String VERSION = "2.0.2";
 
     @SidedProxy(modId = GTValues.MODID, clientSide = "com.zook.devtech.client.ClientProxy", serverSide = "com.zook.devtech.common.CommonProxy")
     public static CommonProxy proxy;
