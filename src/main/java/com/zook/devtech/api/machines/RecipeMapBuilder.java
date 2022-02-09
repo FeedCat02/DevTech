@@ -116,11 +116,13 @@ public class RecipeMapBuilder {
         return this;
     }
 
+    @ModOnly(MultiblockTweaker.MOD_ID)
     @ZenMethod
     public RecipeMapBuilder setSlotOverlay(boolean isOutput, boolean isFluid, ITextureArea slotOverlay) {
         return this.setSlotOverlay(isOutput, isFluid, false, slotOverlay).setSlotOverlay(isOutput, isFluid, true, slotOverlay);
     }
 
+    @ModOnly(MultiblockTweaker.MOD_ID)
     @ZenMethod
     public RecipeMapBuilder setSlotOverlay(boolean isOutput, boolean isFluid, boolean isLast, ITextureArea slotOverlay) {
         slotOverlays.put((byte) ((isOutput ? 2 : 0) + (isFluid ? 1 : 0) + (isLast ? 4 : 0)), slotOverlay.getInternal());

@@ -97,6 +97,7 @@ public interface IMachineBuilder {
     @ZenMethod
     IMachineBuilder setSlotOverlay(boolean highPressure, String path, boolean isOutput, @Optional boolean isFluid, @Optional boolean isLast);
 
+    @ModOnly(MultiblockTweaker.MOD_ID)
     @ZenMethod
     IMachineBuilder setSlotOverlay(boolean highPressure, ITextureArea textureArea, boolean isOutput, @Optional boolean isFluid, @Optional boolean isLast);
 
