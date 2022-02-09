@@ -37,12 +37,22 @@ public interface IMaterialPredicate extends Predicate<Material> {
         return t -> test(t) && other.test(t);
     }
 
+
     @ZenProperty
     IMaterialPredicate hasFluid = mat -> mat.hasProperty(PropertyKey.FLUID);
+
+    @ZenProperty
+    IMaterialPredicate hasPlasma = mat -> mat.hasProperty(PropertyKey.PLASMA);
+
     @ZenProperty
     IMaterialPredicate hasDust = mat -> mat.hasProperty(PropertyKey.DUST);
+
     @ZenProperty
     IMaterialPredicate hasGem = mat -> mat.hasProperty(PropertyKey.GEM);
+
     @ZenProperty
     IMaterialPredicate hasIngot = mat -> mat.hasProperty(PropertyKey.INGOT);
+
+    @ZenProperty
+    IMaterialPredicate hasOre = mat -> mat.hasProperty(PropertyKey.ORE);
 }

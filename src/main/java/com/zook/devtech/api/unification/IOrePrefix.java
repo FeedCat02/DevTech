@@ -5,6 +5,7 @@ import com.zook.devtech.DevTech;
 import com.zook.devtech.common.unification.MaterialRegistry;
 import crafttweaker.annotations.ZenRegister;
 import gregtech.api.items.materialitem.MetaPrefixItem;
+import gregtech.api.unification.ore.IOreRegistrationHandler;
 import gregtech.api.unification.ore.OrePrefix;
 import stanhebben.zenscript.annotations.*;
 
@@ -21,9 +22,13 @@ public interface IOrePrefix {
     }
 
     @ZenMethod
-    static OrePrefix setGenerationPredicate(OrePrefix orePrefix, IMaterialPredicate materialPredicate) {
+    static void setGenerationPredicate(OrePrefix orePrefix, IMaterialPredicate materialPredicate) {
         orePrefix.setGenerationCondition(materialPredicate);
-        return orePrefix;
+    }
+
+    @ZenMethod
+    static void addRecipeHandler(OrePrefix orePrefix, IOreRegistrationHandler oreRegistrationHandler) {
+        orePrefix.addProcessingHandler(oreRegistrationHandler);
     }
 
     @ZenMethod

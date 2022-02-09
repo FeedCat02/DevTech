@@ -84,3 +84,7 @@ def run(command) {
 
     return outputStream.toString().trim()
 }
+
+runClient {
+    jvmArgs "-Xmx4G"
+}

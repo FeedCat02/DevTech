@@ -10,7 +10,6 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.info.MaterialIconType;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.ore.StoneType;
-import gregtech.common.blocks.BlockOre;
 import net.minecraft.block.SoundType;
 import stanhebben.zenscript.annotations.Optional;
 
@@ -21,7 +20,6 @@ import java.util.function.Supplier;
 
 public class MaterialRegistry {
 
-    public static final List<UnbakedStoneType> UNBAKED_STONE_TYPES = new ArrayList<>();
     public static final List<StoneType> STONE_TYPE_LIST = new ArrayList<>();
 
     public static OrePrefix registerOrePrefix(String name, float amount, @Optional String iconType, @Optional long flags) {
@@ -64,7 +62,7 @@ public class MaterialRegistry {
         }
 
         StoneType stoneType = new StoneType(id, name, SoundType.STONE, prefix, material, stateSupplier, spawnPredicate, shouldBeDroppedAsItem);
-
+        STONE_TYPE_LIST.add(stoneType);
         //UNBAKED_STONE_TYPES.add(new UnbakedStoneType(id, name, prefix, material, blockState, stateMatcher, shouldBeDroppedAsItem));
     }
 
@@ -75,34 +73,5 @@ public class MaterialRegistry {
             properties = parts[2];
         }
         return BracketHandlerBlockState.getBlockState(parts[0] + ":" + parts[1], properties);
-    }
-
-    public static class UnbakedStoneType {
-        private int id;
-        private String name;
-        private OrePrefix orePrefix;
-        private Material material;
-        private String blockState;
-        private IBlockStateMatcher matcher;
-        private boolean doDrop;
-
-        public UnbakedStoneType(int id, String name, OrePrefix orePrefix, Material material, String iBlockState, IBlockStateMatcher matcher, boolean doDrop) {
-            this.id = id;
-            this.name = name;
-            this.orePrefix = orePrefix;
-            this.material = material;
-            blockState = iBlockState;
-            this.matcher = matcher;
-            this.doDrop = doDrop;
-        }
-
-        public void createStoneType() {
-
-            /*net.minecraft.block.state.IBlockState mcBlockState = CraftTweakerMC.getBlockState(blockState);
-            Supplier<net.minecraft.block.state.IBlockState> stateSupplier = () -> mcBlockState;
-            Predicate<net.minecraft.block.state.IBlockState> spawnPredicate = matcher == null ? state -> state.equals(mcBlockState) : state -> matcher.matches(CraftTweakerMC.getBlockState(state));
-            StoneType stoneType = new StoneType(id, name, SoundType.STONE, orePrefix, material, stateSupplier, spawnPredicate, doDrop);
-            STONE_TYPE_LIST.add(stoneType);*/
-        }
     }
 }
