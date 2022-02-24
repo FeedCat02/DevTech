@@ -71,7 +71,7 @@ public class CTMachineBuilder implements IMachineBuilder {
     @Override
     public IMachineBuilder setRenderer(IMachineRenderer machineRenderer) {
         this.renderer = machineRenderer;
-        return null;
+        return this;
     }
 
     @Override
@@ -201,7 +201,7 @@ public class CTMachineBuilder implements IMachineBuilder {
     @Override
     public IMachineBuilder setSteamTankSize(boolean highPressure, int tankSize) {
         checkSteamData(highPressure).tankSize = tankSize;
-        return null;
+        return this;
     }
 
     @Override
