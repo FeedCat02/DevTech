@@ -32,6 +32,7 @@ public interface IMachineBuilder {
     @ZenMethod
     IMachineBuilder setRenderer(IMachineRenderer machineRenderer);
 
+    @net.minecraftforge.fml.common.Optional.Method(modid = MultiblockTweaker.MOD_ID)
     @ModOnly(MultiblockTweaker.MOD_ID)
     @ZenMethod
     IMachineBuilder setRenderer(IICubeRenderer machineRenderer);
@@ -75,12 +76,14 @@ public interface IMachineBuilder {
     @ZenMethod
     IMachineBuilder setSteamProgressBar(boolean highPressure, String path, IMoveType moveType);
 
+    @net.minecraftforge.fml.common.Optional.Method(modid = MultiblockTweaker.MOD_ID)
     @ModOnly(MultiblockTweaker.MOD_ID)
     @ZenMethod
     default IMachineBuilder setSteamProgressBar(boolean highPressure, ITextureArea textureArea) {
         return setSteamProgressBar(highPressure, textureArea, IMoveType.RIGHT);
     }
 
+    @net.minecraftforge.fml.common.Optional.Method(modid = MultiblockTweaker.MOD_ID)
     @ModOnly(MultiblockTweaker.MOD_ID)
     @ZenMethod
     IMachineBuilder setSteamProgressBar(boolean highPressure, ITextureArea textureArea, IMoveType moveType);
@@ -97,6 +100,7 @@ public interface IMachineBuilder {
     @ZenMethod
     IMachineBuilder setSlotOverlay(boolean highPressure, String path, boolean isOutput, @Optional boolean isFluid, @Optional boolean isLast);
 
+    @net.minecraftforge.fml.common.Optional.Method(modid = MultiblockTweaker.MOD_ID)
     @ModOnly(MultiblockTweaker.MOD_ID)
     @ZenMethod
     IMachineBuilder setSlotOverlay(boolean highPressure, ITextureArea textureArea, boolean isOutput, @Optional boolean isFluid, @Optional boolean isLast);

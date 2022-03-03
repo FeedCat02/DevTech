@@ -107,6 +107,7 @@ public class RecipeMapBuilder {
         return this;
     }
 
+    @net.minecraftforge.fml.common.Optional.Method(modid = MultiblockTweaker.MOD_ID)
     @ModOnly(MultiblockTweaker.MOD_ID)
     @ZenMethod
     public RecipeMapBuilder setDurationBar(ITextureArea textureArea, @Optional IMoveType moveType) {
@@ -116,12 +117,14 @@ public class RecipeMapBuilder {
         return this;
     }
 
+    @net.minecraftforge.fml.common.Optional.Method(modid = MultiblockTweaker.MOD_ID)
     @ModOnly(MultiblockTweaker.MOD_ID)
     @ZenMethod
     public RecipeMapBuilder setSlotOverlay(boolean isOutput, boolean isFluid, ITextureArea slotOverlay) {
         return this.setSlotOverlay(isOutput, isFluid, false, slotOverlay).setSlotOverlay(isOutput, isFluid, true, slotOverlay);
     }
 
+    @net.minecraftforge.fml.common.Optional.Method(modid = MultiblockTweaker.MOD_ID)
     @ModOnly(MultiblockTweaker.MOD_ID)
     @ZenMethod
     public RecipeMapBuilder setSlotOverlay(boolean isOutput, boolean isFluid, boolean isLast, ITextureArea slotOverlay) {
@@ -144,6 +147,7 @@ public class RecipeMapBuilder {
         return this;
     }
 
+    @net.minecraftforge.fml.common.Optional.Method(modid = MultiblockTweaker.MOD_ID)
     @ModOnly(MultiblockTweaker.MOD_ID)
     @ZenMethod
     public RecipeMapBuilder setSound(ISound sound) {
