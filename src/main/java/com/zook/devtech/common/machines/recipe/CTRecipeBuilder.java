@@ -26,7 +26,7 @@ public class CTRecipeBuilder extends RecipeBuilder<CTRecipeBuilder> {
     }
 
     public ValidationResult<Recipe> build() {
-        return ValidationResult.newResult(this.finalizeAndValidate(), new Recipe(this.inputs, this.outputs, this.chancedOutputs, this.fluidInputs, this.fluidOutputs, this.duration, this.EUt, this.hidden));
+        return ValidationResult.newResult(this.finalizeAndValidate(), new Recipe(this.inputs, this.outputs, this.chancedOutputs, this.fluidInputs, this.fluidOutputs, this.duration, this.EUt, this.hidden, true));
     }
 
     @Override

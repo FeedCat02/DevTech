@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "2.0.4"
+version = "2.1.0"
 group = "com.zook.devtech" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "devtech"
 
@@ -28,13 +28,14 @@ minecraft {
 
 repositories {
     maven {
-        url = "https://minecraft.curseforge.com/api/maven"
-    }
-    maven {
         url = "http://chickenbones.net/maven/"
     }
     maven {
         url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        name = "CurseMaven"
+        setUrl("https://www.cursemaven.com")
     }
 }
 
@@ -42,10 +43,10 @@ dependencies {
     provided "mezz.jei:jei_1.12.2:4.15.0.293:api"
     runtime "mezz.jei:jei_1.12.2:4.15.0.293"
 
-    deobfCompile "codechicken-lib-1-8:CodeChickenLib-1.12.2:3.2.3.357:universal"
+    deobfCompile "curse.maven:codechicken-lib-1-8-242818:2779848"
 
     compile files(
-            "libs/gregtech-1.12.2-2.1.0-beta.jar",
+            "libs/gregtech-1.12.2-2.2.0-beta.jar",
             "libs/CraftTweaker2-1.12-4.1.20.670.jar",
             "libs/multiblocktweaker-1.12.2-stable-gtceu-1.6.0.jar"
     )
