@@ -37,6 +37,9 @@ repositories {
         name = "CurseMaven"
         setUrl("https://www.cursemaven.com")
     }
+    maven {
+        url "https://maven.cleanroommc.com"
+    }
 }
 
 dependencies {
@@ -44,6 +47,7 @@ dependencies {
     runtime "mezz.jei:jei_1.12.2:4.15.0.293"
 
     deobfCompile "curse.maven:codechicken-lib-1-8-242818:2779848"
+    deobfCompile ("zone.rong:mixinbooter:4.2")
 
     compile files(
             "libs/gregtech-1.12.2-2.2.0-beta.jar",

@@ -1,0 +1,12 @@
+{
+  "package": "com.zook.devtech.common.mixins",
+  "refmap": "mixins.devtech.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "OrePrefixMixin"
+  ],
+  "client": [
+  ]
+}
