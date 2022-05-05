@@ -1,7 +1,7 @@
-package com.zook.devtech.common;
+package com.zook.devtech.api;
 
-import com.zook.devtech.api.IRecipeUtils;
 import crafttweaker.CraftTweakerAPI;
+import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.item.IngredientStack;
@@ -11,17 +11,22 @@ import crafttweaker.mc1120.brackets.BracketHandlerItem;
 import crafttweaker.mc1120.brackets.BracketHandlerLiquid;
 import crafttweaker.mc1120.brackets.BracketHandlerOre;
 import crafttweaker.mc1120.item.MCItemStack;
+import crafttweaker.mc1120.liquid.MCLiquidStack;
 import gregtech.api.GregTechAPI;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.UnificationEntry;
 import stanhebben.zenscript.annotations.Optional;
+import stanhebben.zenscript.annotations.ZenExpansion;
+import stanhebben.zenscript.annotations.ZenMethodStatic;
 
-public class RecipeUtils implements IRecipeUtils {
+@ZenExpansion("mods.gregtech.recipe.helpers")
+@ZenRegister
+public class RecipeUtils {
 
-    @Override
-    public ILiquidStack getFluid(String name, int amount) {
+    @ZenMethodStatic("fluid")
+    public ILiquidStack getFluid(String name, @Optional(valueLong = 1) int amount) {
         if (amount < 0)
             amount = 0;
         ILiquidStack fluid = BracketHandlerLiquid.getLiquid(name);
@@ -32,8 +37,13 @@ public class RecipeUtils implements IRecipeUtils {
         return fluid.withAmount(amount);
     }
 
-    @Override
-    public IItemStack getItem(String name, int meta, int amount) {
+    @ZenMethodStatic("fluid")
+    public ILiquidStack getFluid(Material material, @Optional(valueLong = 1) int amount) {
+        return new MCLiquidStack(material.getFluid(amount));
+    }
+
+    @ZenMethodStatic("item")
+    public IItemStack getItem(String name, @Optional int meta, @Optional(valueLong = 1) int amount) {
         if (amount < 1)
             return MCItemStack.EMPTY;
         if (meta < 0)
@@ -44,22 +54,22 @@ public class RecipeUtils implements IRecipeUtils {
         return item.withAmount(amount);
     }
 
-    @Override
-    public IIngredient getOreEntry(String name, int amount) {
+    @ZenMethodStatic("ore")
+    public IIngredient getOreEntry(String name, @Optional(valueLong = 1) int amount) {
         if (amount < 1)
             return MCItemStack.EMPTY;
         return BracketHandlerOre.getOre(name).amount(amount);
     }
 
-    @Override
-    public IItemStack getItem(OrePrefix orePrefix, Material material, @Optional(valueLong = 1) int amount) {
+    @ZenMethodStatic("item")
+    public static IItemStack getItem(OrePrefix orePrefix, Material material, @Optional(valueLong = 1) int amount) {
         if (amount < 1)
             return MCItemStack.EMPTY;
         return new MCItemStack(OreDictUnifier.get(orePrefix, material, amount));
     }
 
-    @Override
-    public IItemStack getItem(String orePrefix, Material material, @Optional(valueLong = 1) int amount) {
+    @ZenMethodStatic("item")
+    public static IItemStack getItem(String orePrefix, Material material, @Optional(valueLong = 1) int amount) {
         if (amount < 1)
             return MCItemStack.EMPTY;
         OrePrefix orePrefix1 = OrePrefix.getPrefix(orePrefix);
@@ -70,8 +80,8 @@ public class RecipeUtils implements IRecipeUtils {
         return new MCItemStack(OreDictUnifier.get(orePrefix1, material, amount));
     }
 
-    @Override
-    public IItemStack getItem(OrePrefix orePrefix, String material, @Optional(valueLong = 1) int amount) {
+    @ZenMethodStatic("item")
+    public static IItemStack getItem(OrePrefix orePrefix, String material, @Optional(valueLong = 1) int amount) {
         if (amount < 1)
             return MCItemStack.EMPTY;
         Material material1 = GregTechAPI.MaterialRegistry.get(material);
@@ -82,8 +92,8 @@ public class RecipeUtils implements IRecipeUtils {
         return new MCItemStack(OreDictUnifier.get(orePrefix, material1, amount));
     }
 
-    @Override
-    public IItemStack getItem(String orePrefix, String material, @Optional(valueLong = 1) int amount) {
+    @ZenMethodStatic("item")
+    public static IItemStack getItem(String orePrefix, String material, @Optional(valueLong = 1) int amount) {
         if (amount < 1)
             return MCItemStack.EMPTY;
         OrePrefix orePrefix1 = OrePrefix.getPrefix(orePrefix);
@@ -99,16 +109,16 @@ public class RecipeUtils implements IRecipeUtils {
         return new MCItemStack(OreDictUnifier.get(orePrefix1, material1, amount));
     }
 
-    @Override
-    public IIngredient getOreEntry(OrePrefix orePrefix, Material material, @Optional(valueLong = 1) int amount) {
+    @ZenMethodStatic("ore")
+    public static IIngredient getOreEntry(OrePrefix orePrefix, Material material, @Optional(valueLong = 1) int amount) {
         if (amount < 1)
             return MCItemStack.EMPTY;
         UnificationEntry entry = new UnificationEntry(orePrefix, material);
         return new IngredientStack(CraftTweakerMC.getOreDict(entry.toString()), amount);
     }
 
-    @Override
-    public IIngredient getOreEntry(String orePrefix, Material material, @Optional(valueLong = 1) int amount) {
+    @ZenMethodStatic("ore")
+    public static IIngredient getOreEntry(String orePrefix, Material material, @Optional(valueLong = 1) int amount) {
         if (amount < 1)
             return MCItemStack.EMPTY;
         OrePrefix orePrefix1 = OrePrefix.getPrefix(orePrefix);
@@ -120,8 +130,8 @@ public class RecipeUtils implements IRecipeUtils {
         return new IngredientStack(CraftTweakerMC.getOreDict(entry.toString()), amount);
     }
 
-    @Override
-    public IIngredient getOreEntry(OrePrefix orePrefix, String material, @Optional(valueLong = 1) int amount) {
+    @ZenMethodStatic("ore")
+    public static IIngredient getOreEntry(OrePrefix orePrefix, String material, @Optional(valueLong = 1) int amount) {
         if (amount < 1)
             return MCItemStack.EMPTY;
         Material material1 = GregTechAPI.MaterialRegistry.get(material);
@@ -133,8 +143,8 @@ public class RecipeUtils implements IRecipeUtils {
         return new IngredientStack(CraftTweakerMC.getOreDict(entry.toString()), amount);
     }
 
-    @Override
-    public IIngredient getOreEntry(String orePrefix, String material, @Optional(valueLong = 1) int amount) {
+    @ZenMethodStatic("ore")
+    public static IIngredient getOreEntry(String orePrefix, String material, @Optional(valueLong = 1) int amount) {
         if (amount < 1)
             return MCItemStack.EMPTY;
         OrePrefix orePrefix1 = OrePrefix.getPrefix(orePrefix);
