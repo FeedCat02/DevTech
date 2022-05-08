@@ -64,10 +64,13 @@ public class MetaItem {
 
     @ZenMethod
     public MetaItem fluidItem(int maxCapacity,
+                              @Optional boolean gasProof,
+                              @Optional boolean acidProof,
+                              @Optional boolean cryoProof,
+                              @Optional boolean plasmaProof,
                               @Optional(valueBoolean = true) boolean allowPartlyFill,
-                              @Optional(valueLong = Integer.MIN_VALUE) int minFluidTemperature,
                               @Optional(valueLong = Integer.MAX_VALUE) int maxFluidTemperature) {
-        item.addComponents(new FluidStats(maxCapacity, minFluidTemperature, maxFluidTemperature, allowPartlyFill));
+        item.addComponents(new FluidStats(maxCapacity, maxFluidTemperature, gasProof, acidProof, cryoProof, plasmaProof, allowPartlyFill));
         return this;
     }
 
