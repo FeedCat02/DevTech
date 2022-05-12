@@ -1,6 +1,7 @@
 package com.zook.devtech.common;
 
 import com.zook.devtech.DevTech;
+import com.zook.devtech.api.unification.ore.IOreRecipeHandler;
 import com.zook.devtech.common.unification.MaterialRegistry;
 import crafttweaker.mc1120.events.ScriptRunEvent;
 import gregtech.api.unification.material.Material;
@@ -28,7 +29,7 @@ import java.util.function.Function;
 public class CommonProxy {
 
     public static final Map<OrePrefix, Set<Material>> GENERATED_MATERIALS = new HashMap<>();
-    public static final Map<OrePrefix, List<IOreRegistrationHandler>> REGISTRATION_HANDLERS = new HashMap<>();
+    public static final Map<OrePrefix, List<IOreRecipeHandler>> REGISTRATION_HANDLERS = new HashMap<>();
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
@@ -45,9 +46,9 @@ public class CommonProxy {
     @SubscribeEvent
     public static void afterScript(ScriptRunEvent.Post event) {
         System.out.println("Run script post");
-        for (Map.Entry<OrePrefix, List<IOreRegistrationHandler>> handlers : REGISTRATION_HANDLERS.entrySet()) {
+        for (Map.Entry<OrePrefix, List<IOreRecipeHandler>> handlers : REGISTRATION_HANDLERS.entrySet()) {
             for (Material material : GENERATED_MATERIALS.get(handlers.getKey())) {
-                for (IOreRegistrationHandler handler : handlers.getValue()) {
+                for (IOreRecipeHandler handler : handlers.getValue()) {
                     handler.processMaterial(handlers.getKey(), material);
                 }
             }

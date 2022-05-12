@@ -10,6 +10,7 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.info.MaterialIconType;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.ore.StoneType;
+import gregtech.integration.jei.recipe.primitive.OreByProduct;
 import net.minecraft.block.SoundType;
 import stanhebben.zenscript.annotations.Optional;
 

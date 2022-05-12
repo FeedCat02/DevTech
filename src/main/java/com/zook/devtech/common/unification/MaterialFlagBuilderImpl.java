@@ -1,7 +1,7 @@
 package com.zook.devtech.common.unification;
 
-import com.zook.devtech.api.unification.IMaterialFlagBuilder;
-import com.zook.devtech.api.unification.MaterialFlag;
+import com.zook.devtech.api.unification.material.IMaterialFlagBuilder;
+import com.zook.devtech.api.unification.material.MaterialFlag;
 import gregtech.api.unification.material.properties.PropertyKey;
 
 public class MaterialFlagBuilderImpl implements IMaterialFlagBuilder {
