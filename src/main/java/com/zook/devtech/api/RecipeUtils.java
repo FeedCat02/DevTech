@@ -82,7 +82,7 @@ public class RecipeUtils {
     public static IItemStack getItem(String orePrefix, Material material) {
         OrePrefix orePrefix1 = OrePrefix.getPrefix(orePrefix);
         if (orePrefix1 == null) {
-            CraftTweakerAPI.logError("Can't find ore prefix 2 " + orePrefix);
+            CraftTweakerAPI.logError("Can't find ore prefix " + orePrefix);
             return MCItemStack.EMPTY;
         }
         return new MCItemStack(OreDictUnifier.get(orePrefix1, material));
@@ -102,7 +102,7 @@ public class RecipeUtils {
     public static IItemStack getItem(String orePrefix, String material) {
         OrePrefix orePrefix1 = OrePrefix.getPrefix(orePrefix);
         if (orePrefix1 == null) {
-            CraftTweakerAPI.logError("Can't find ore prefix 3 " + orePrefix);
+            CraftTweakerAPI.logError("Can't find ore prefix " + orePrefix);
             return MCItemStack.EMPTY;
         }
         Material material1 = GregTechAPI.MaterialRegistry.get(material);
