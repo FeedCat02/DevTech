@@ -6,7 +6,6 @@ import com.zook.devtech.common.unification.MaterialRegistry;
 import crafttweaker.mc1120.events.ScriptRunEvent;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.properties.PropertyKey;
-import gregtech.api.unification.ore.IOreRegistrationHandler;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.ore.StoneType;
 import gregtech.loaders.recipe.handlers.OreRecipeHandler;

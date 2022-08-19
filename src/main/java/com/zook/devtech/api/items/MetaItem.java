@@ -3,8 +3,8 @@ package com.zook.devtech.api.items;
 import com.zook.devtech.common.items.DTMetaItem;
 import crafttweaker.annotations.ZenRegister;
 import gregtech.api.items.metaitem.ElectricStats;
-import gregtech.api.items.metaitem.FluidStats;
 import gregtech.api.items.metaitem.FoodStats;
+import gregtech.api.items.metaitem.ThermalFluidStats;
 import stanhebben.zenscript.annotations.Optional;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
@@ -70,7 +70,7 @@ public class MetaItem {
                               @Optional boolean plasmaProof,
                               @Optional(valueBoolean = true) boolean allowPartlyFill,
                               @Optional(valueLong = Integer.MAX_VALUE) int maxFluidTemperature) {
-        item.addComponents(new FluidStats(maxCapacity, maxFluidTemperature, gasProof, acidProof, cryoProof, plasmaProof, allowPartlyFill));
+        item.addComponents(new ThermalFluidStats(maxCapacity, maxFluidTemperature, gasProof, acidProof, cryoProof, plasmaProof, allowPartlyFill));
         return this;
     }
 
