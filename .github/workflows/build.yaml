@@ -85,7 +85,7 @@ jobs:
           game-versions: |
             1.12.2
           dependencies: |
-            gregtech | depends | 2.7.2
+            gregtech-ce-unofficial | depends | 2.7.2
             mixin-booter | depends | 8.3
             crafttweaker | depends | 4.1.20.690
             codechicken-lib-1-8 | depends | 3.358
