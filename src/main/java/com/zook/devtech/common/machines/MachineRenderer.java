@@ -14,15 +14,7 @@ public class MachineRenderer implements IMachineRenderer {
     public static final Map<String, OrientedOverlayRenderer.OverlayFace> FACE_MAP = new HashMap<>();
 
     public static IMachineRenderer createOrientedRenderer(String basePath, String... faces) {
-        List<OrientedOverlayRenderer.OverlayFace> overlayFaces = new ArrayList<>();
-
-        for (String face : faces) {
-            OrientedOverlayRenderer.OverlayFace overlayFace = FACE_MAP.get(face.toLowerCase());
-            if (overlayFace != null) {
-                overlayFaces.add(overlayFace);
-            }
-        }
-        return new MachineRenderer(new OrientedOverlayRenderer(basePath, overlayFaces.toArray(new OrientedOverlayRenderer.OverlayFace[0])));
+        return new MachineRenderer(new OrientedOverlayRenderer(basePath));
     }
 
     private final ICubeRenderer renderer;

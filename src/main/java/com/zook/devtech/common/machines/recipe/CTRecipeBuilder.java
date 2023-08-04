@@ -14,6 +14,7 @@ public class CTRecipeBuilder extends RecipeBuilder<CTRecipeBuilder> {
     public CTRecipeBuilder() {
         super();
         properties = new HashMap<>();
+        isCTRecipe();
     }
 
     public CTRecipeBuilder(CTRecipeBuilder recipeBuilder) {
@@ -26,12 +27,8 @@ public class CTRecipeBuilder extends RecipeBuilder<CTRecipeBuilder> {
     }
 
     public ValidationResult<Recipe> build() {
-        return ValidationResult.newResult(this.finalizeAndValidate(), new Recipe(this.inputs, this.outputs, this.chancedOutputs, this.fluidInputs, this.fluidOutputs, this.duration, this.EUt, this.hidden, true));
-    }
-
-    @Override
-    public boolean applyProperty(String key, Object value) {
-        properties.put(key, value);
-        return true;
+        return ValidationResult.newResult(this.finalizeAndValidate(), new Recipe(this.inputs,
+                this.outputs, this.chancedOutputs, this.fluidInputs, this.fluidOutputs,
+                this.duration, this.EUt, this.hidden, true, recipePropertyStorage, this.category));
     }
 }

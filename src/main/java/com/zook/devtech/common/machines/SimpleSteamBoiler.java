@@ -136,12 +136,11 @@ public class SimpleSteamBoiler extends MetaTileEntity {
         if (recipeMap == null) {
             return new FluidTankList(false);
         }
-        this.waterTank = new FilteredFluidHandler(16000).setFillPredicate(ModHandler::isWater);
+        this.waterTank = new FilteredFluidHandler(16000).setFilter(CommonFluidFilters.BOILER_FLUID);
         FilteredFluidHandler[] fluidImports = new FilteredFluidHandler[recipeMap.getMaxFluidInputs() + 1];
         fluidImports[0] = (FilteredFluidHandler) this.waterTank;
         for (int i = 1; i < fluidImports.length; i++) {
             NotifiableFilteredFluidHandler filteredFluidHandler = new NotifiableFilteredFluidHandler(data.tankSize, this, false);
-            filteredFluidHandler.setFillPredicate(this::canInputFluid);
             fluidImports[i] = filteredFluidHandler;
         }
         return new FluidTankList(false, fluidImports);
@@ -151,7 +150,7 @@ public class SimpleSteamBoiler extends MetaTileEntity {
     protected FluidTankList createExportFluidHandler() {
         if (recipeMap == null)
             return new FluidTankList(false);
-        this.steamTank = new FilteredFluidHandler(16000).setFillPredicate(ModHandler::isSteam);
+        this.steamTank = new FilteredFluidHandler(16000).setFilter(CommonFluidFilters.STEAM);
         FluidTank[] fluidExports = new FluidTank[recipeMap.getMaxFluidOutputs() + 1];
         fluidExports[0] = (FluidTank) this.steamTank;
         for (int i = 0; i < fluidExports.length; i++) {
@@ -160,30 +159,6 @@ public class SimpleSteamBoiler extends MetaTileEntity {
         return new FluidTankList(false, fluidExports);
     }
 
-    protected boolean canInputFluid(FluidStack inputFluid) {
-        if (recipeMap.canInputFluidForce(inputFluid.getFluid()))
-            return true; //if recipe map forces input of given fluid, return true
-        Set<Recipe> matchingRecipes = null;
-        for (IFluidTank fluidTank : importFluids) {
-            FluidStack fluidInTank = fluidTank.getFluid();
-            if (fluidInTank != null) {
-                if (matchingRecipes == null) {
-                    //if we didn't have a list of recipes with any fluids, obtain it from first tank with fluid
-                    matchingRecipes = new HashSet<>(recipeMap.getRecipesForFluid(fluidInTank));
-                } else {
-                    //else, remove recipes that don't contain fluid in this tank from list
-                    matchingRecipes.removeIf(recipe -> !recipe.hasInputFluid(fluidInTank));
-                }
-            }
-        }
-        if (matchingRecipes == null) {
-            //if all tanks are empty, generally fluid can be inserted if there are recipes for it
-            return !recipeMap.getRecipesForFluid(inputFluid).isEmpty();
-        } else {
-            //otherwise, we can insert fluid only if one of recipes accept it as input
-            return matchingRecipes.stream().anyMatch(recipe -> recipe.hasInputFluid(inputFluid));
-        }
-    }
 
     public void buildRecipeUI(ModularUI.Builder builder, DoubleSupplier progressSupplier, IItemHandlerModifiable importItems, IItemHandlerModifiable exportItems, FluidTankList importFluids, FluidTankList exportFluids, int yOffset) {
         builder.widget(new RecipeProgressWidget(progressSupplier, 78, 23 + yOffset, 20, 20, data.progressBar, data.moveType, recipeMap));

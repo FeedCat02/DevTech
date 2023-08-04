@@ -76,11 +76,10 @@ public class SimpleSteamMachine extends SteamMetaTileEntity {
             return new FluidTankList(false);
         }
         FilteredFluidHandler[] fluidImports = new FilteredFluidHandler[recipeMap.getMaxFluidInputs() + 1];
-        this.steamFluidTank = new FilteredFluidHandler(16000).setFillPredicate(ModHandler::isSteam);
+        this.steamFluidTank = new FilteredFluidHandler(16000).setFilter(CommonFluidFilters.STEAM);
         fluidImports[0] = (FilteredFluidHandler) this.steamFluidTank;
         for (int i = 1; i < fluidImports.length; i++) {
             NotifiableFilteredFluidHandler filteredFluidHandler = new NotifiableFilteredFluidHandler(data.tankSize, this, false);
-            filteredFluidHandler.setFillPredicate(this::canInputFluid);
             fluidImports[i] = filteredFluidHandler;
         }
         return new FluidTankList(false, fluidImports);
@@ -94,31 +93,6 @@ public class SimpleSteamMachine extends SteamMetaTileEntity {
             fluidExports[i] = new NotifiableFluidTank(data.tankSize, this, true);
         }
         return new FluidTankList(false, fluidExports);
-    }
-
-    protected boolean canInputFluid(FluidStack inputFluid) {
-        if (recipeMap.canInputFluidForce(inputFluid.getFluid()))
-            return true; //if recipe map forces input of given fluid, return true
-        Set<Recipe> matchingRecipes = null;
-        for (IFluidTank fluidTank : importFluids) {
-            FluidStack fluidInTank = fluidTank.getFluid();
-            if (fluidInTank != null) {
-                if (matchingRecipes == null) {
-                    //if we didn't have a list of recipes with any fluids, obtain it from first tank with fluid
-                    matchingRecipes = new HashSet<>(recipeMap.getRecipesForFluid(fluidInTank));
-                } else {
-                    //else, remove recipes that don't contain fluid in this tank from list
-                    matchingRecipes.removeIf(recipe -> !recipe.hasInputFluid(fluidInTank));
-                }
-            }
-        }
-        if (matchingRecipes == null) {
-            //if all tanks are empty, generally fluid can be inserted if there are recipes for it
-            return !recipeMap.getRecipesForFluid(inputFluid).isEmpty();
-        } else {
-            //otherwise, we can insert fluid only if one of recipes accept it as input
-            return matchingRecipes.stream().anyMatch(recipe -> recipe.hasInputFluid(inputFluid));
-        }
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.zook.devtech.api.machines;
 
-import com.zook.devtech.common.machines.recipe.CTRecipeBuilder;
 import crafttweaker.annotations.ModOnly;
 import crafttweaker.annotations.ZenRegister;
 import eutros.multiblocktweaker.MultiblockTweaker;
@@ -12,6 +11,7 @@ import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.resources.TextureArea;
 import gregtech.api.gui.widgets.ProgressWidget;
 import gregtech.api.recipes.RecipeMap;
+import gregtech.api.recipes.builders.SimpleRecipeBuilder;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -23,7 +23,10 @@ import stanhebben.zenscript.annotations.ZenMethod;
 @ZenRegister
 public class RecipeMapBuilder {
 
-    private int minInputs = 0, maxInputs = 0, minOutputs = 0, maxOutputs = 0, minFluidInputs = 0, maxFluidInputs = 0, minFluidOutputs = 0, maxFluidOutputs = 0;
+    private int maxInputs = 0;
+    private int maxOutputs = 0;
+    private int maxFluidInputs = 0;
+    private int maxFluidOutputs = 0;
     private final String name;
     private boolean isHidden = false;
     private final TByteObjectMap<TextureArea> slotOverlays = new TByteObjectHashMap<>();
@@ -43,53 +46,33 @@ public class RecipeMapBuilder {
 
     @ZenMethod
     public RecipeMapBuilder setInputs(int max, @Optional int min) {
-        if (min < 0)
-            min = 0;
         if (max < 0)
             max = 0;
-        if (min > max)
-            min = max;
         this.maxInputs = max;
-        this.minInputs = min;
         return this;
     }
 
     @ZenMethod
     public RecipeMapBuilder setOutputs(int max, @Optional int min) {
-        if (min < 0)
-            min = 0;
         if (max < 0)
             max = 0;
-        if (min > max)
-            min = max;
         this.maxOutputs = max;
-        this.minOutputs = min;
         return this;
     }
 
     @ZenMethod
     public RecipeMapBuilder setFluidInputs(int max, @Optional int min) {
-        if (min < 0)
-            min = 0;
         if (max < 0)
             max = 0;
-        if (min > max)
-            min = max;
         this.maxFluidInputs = max;
-        this.minFluidInputs = min;
         return this;
     }
 
     @ZenMethod
     public RecipeMapBuilder setFluidOutputs(int max, @Optional int min) {
-        if (min < 0)
-            min = 0;
         if (max < 0)
             max = 0;
-        if (min > max)
-            min = max;
         this.maxFluidOutputs = max;
-        this.minFluidOutputs = min;
         return this;
     }
 
@@ -158,16 +141,15 @@ public class RecipeMapBuilder {
     @ZenMethod
     public RecipeMap<?> build() {
         RecipeMap<?> recipeMap = new RecipeMap<>(name,
-                minInputs,
                 maxInputs,
-                minOutputs,
                 maxOutputs,
-                minFluidInputs,
                 maxFluidInputs,
-                minFluidOutputs,
                 maxFluidOutputs,
-                new CTRecipeBuilder().duration(100).EUt(1),
+                new SimpleRecipeBuilder().duration(100).EUt(1),
                 isHidden);
+        if (this.maxOutputs == 0 && this.maxFluidOutputs == 0) {
+            recipeMap.allowEmptyOutput();
+        }
         for (byte key : slotOverlays.keys()) {
             recipeMap.setSlotOverlay((key & 2) != 0, (key & 1) != 0, (key & 4) != 0, slotOverlays.get(key));
         }

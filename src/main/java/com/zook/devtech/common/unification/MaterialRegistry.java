@@ -1,8 +1,8 @@
 package com.zook.devtech.common.unification;
 
+import com.zook.devtech.api.IBlockStateMatcher;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.api.block.IBlockState;
-import crafttweaker.api.block.IBlockStateMatcher;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.mc1120.brackets.BracketHandlerBlockState;
 import gregtech.api.GTValues;
@@ -10,7 +10,6 @@ import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.info.MaterialIconType;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.ore.StoneType;
-import gregtech.integration.jei.recipe.primitive.OreByProduct;
 import net.minecraft.block.SoundType;
 import stanhebben.zenscript.annotations.Optional;
 
@@ -50,24 +49,23 @@ public class MaterialRegistry {
             }
             return CraftTweakerMC.getBlockState(ctBlockState);
         };
-        Predicate<net.minecraft.block.state.IBlockState> spawnPredicate;
         if (stateMatcher == null) {
-            spawnPredicate = state -> {
+            stateMatcher = IBlockStateMatcher.of(blockState);
+            /*spawnPredicate = state -> {
                 IBlockState ctBlockState = getCtBlockState(blockState);
                 if (ctBlockState == null)
                     return false;
                 return state.equals(CraftTweakerMC.getBlockState(ctBlockState));
-            };
-        } else {
-            spawnPredicate = state -> stateMatcher.matches(CraftTweakerMC.getBlockState(state));
+            };*/
         }
+        IBlockStateMatcher finalStateMatcher = stateMatcher;
+        Predicate<net.minecraft.block.state.IBlockState> spawnPredicate = state -> finalStateMatcher.matches(CraftTweakerMC.getBlockState(state));
 
         StoneType stoneType = new StoneType(id, name, SoundType.STONE, prefix, material, stateSupplier, spawnPredicate, shouldBeDroppedAsItem);
         STONE_TYPE_LIST.add(stoneType);
-        //UNBAKED_STONE_TYPES.add(new UnbakedStoneType(id, name, prefix, material, blockState, stateMatcher, shouldBeDroppedAsItem));
     }
 
-    private static IBlockState getCtBlockState(String string) {
+    public static IBlockState getCtBlockState(String string) {
         String[] parts = string.split(":", 3);
         String properties = "";
         if (parts.length > 2) {

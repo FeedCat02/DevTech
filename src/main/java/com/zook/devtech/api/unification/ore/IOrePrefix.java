@@ -7,6 +7,7 @@ import com.zook.devtech.common.CommonProxy;
 import com.zook.devtech.common.unification.MaterialRegistry;
 import crafttweaker.annotations.ZenRegister;
 import gregtech.api.GTValues;
+import gregtech.api.GregTechAPI;
 import gregtech.api.items.materialitem.MetaPrefixItem;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.IOreRegistrationHandler;
@@ -48,7 +49,7 @@ public interface IOrePrefix {
 
     @ZenMethod
     static void createMaterialItem(OrePrefix orePrefix) {
-        MetaPrefixItem prefixItem = new MetaPrefixItem(orePrefix);
+        MetaPrefixItem prefixItem = new MetaPrefixItem(GregTechAPI.materialManager.getRegistry(GTValues.MODID), orePrefix);
         prefixItem.setRegistryName(DevTech.MODID, "meta_" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, orePrefix.name()));
     }
 }

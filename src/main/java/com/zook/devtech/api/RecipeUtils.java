@@ -13,11 +13,11 @@ import crafttweaker.mc1120.brackets.BracketHandlerOre;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.mc1120.liquid.MCLiquidStack;
 import gregtech.api.GregTechAPI;
-import gregtech.api.recipes.crafttweaker.MetaItemBracketHandler;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.UnificationEntry;
+import gregtech.integration.crafttweaker.recipe.MetaItemBracketHandler;
 import stanhebben.zenscript.annotations.Optional;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
@@ -55,17 +55,13 @@ public class RecipeUtils {
 
     @ZenMethod("metaitem")
     public static IItemStack getMetaItem(String name) {
-        IItemStack item = MetaItemBracketHandler.getMetaItem(name);
-        if (item == null) {
-            return MCItemStack.EMPTY;
-        }
-        return item;
+        return MetaItemBracketHandler.getCtMetaItem(name);
     }
 
     @Nullable
     @ZenMethod("material")
     public static Material getMaterial(String name) {
-        return GregTechAPI.MATERIAL_REGISTRY.getObject(name);
+        return GregTechAPI.materialManager.getMaterial(name);
     }
 
     @ZenMethod("ore")
@@ -90,7 +86,7 @@ public class RecipeUtils {
 
     @ZenMethod("item")
     public static IItemStack getItem(OrePrefix orePrefix, String material) {
-        Material material1 = GregTechAPI.MaterialRegistry.get(material);
+        Material material1 = GregTechAPI.materialManager.getMaterial(material);
         if (material1 == null) {
             CraftTweakerAPI.logError("Can't find material " + orePrefix);
             return MCItemStack.EMPTY;
@@ -105,7 +101,7 @@ public class RecipeUtils {
             CraftTweakerAPI.logError("Can't find ore prefix " + orePrefix);
             return MCItemStack.EMPTY;
         }
-        Material material1 = GregTechAPI.MaterialRegistry.get(material);
+        Material material1 = GregTechAPI.materialManager.getMaterial(material);
         if (material1 == null) {
             CraftTweakerAPI.logError("Can't find material " + orePrefix);
             return MCItemStack.EMPTY;
@@ -132,7 +128,7 @@ public class RecipeUtils {
 
     @ZenMethod("ore")
     public static IIngredient getOreEntry(OrePrefix orePrefix, String material) {
-        Material material1 = GregTechAPI.MaterialRegistry.get(material);
+        Material material1 = GregTechAPI.materialManager.getMaterial(material);
         if (material1 == null) {
             CraftTweakerAPI.logError("Can't find material " + orePrefix);
             return MCItemStack.EMPTY;
@@ -148,7 +144,7 @@ public class RecipeUtils {
             CraftTweakerAPI.logError("Can't find ore prefix " + orePrefix);
             return MCItemStack.EMPTY;
         }
-        Material material1 = GregTechAPI.MaterialRegistry.get(material);
+        Material material1 = GregTechAPI.materialManager.getMaterial(material);
         if (material1 == null) {
             CraftTweakerAPI.logError("Can't find material " + orePrefix);
             return MCItemStack.EMPTY;
