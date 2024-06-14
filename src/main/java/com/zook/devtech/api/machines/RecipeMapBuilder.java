@@ -11,6 +11,7 @@ import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.resources.TextureArea;
 import gregtech.api.gui.widgets.ProgressWidget;
 import gregtech.api.recipes.RecipeMap;
+import gregtech.api.recipes.chance.boost.ChanceBoostFunction;
 import gregtech.api.recipes.builders.SimpleRecipeBuilder;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -32,7 +33,7 @@ public class RecipeMapBuilder {
     private final TByteObjectMap<TextureArea> slotOverlays = new TByteObjectHashMap<>();
     private ProgressWidget.MoveType moveType = ProgressWidget.MoveType.HORIZONTAL;
     private TextureArea progressBarTexture = GuiTextures.PROGRESS_BAR_ARROW;
-    private RecipeMap.IChanceFunction chanceFunction;
+    private ChanceBoostFunction chanceFunction = ChanceBoostFunction.OVERCLOCK;
     private SoundEvent sound;
 
     public RecipeMapBuilder(String name) {
@@ -116,7 +117,7 @@ public class RecipeMapBuilder {
     }
 
     @ZenMethod
-    public RecipeMapBuilder setChanceFunction(RecipeMap.IChanceFunction chanceFunction) {
+    public RecipeMapBuilder setChanceFunction(@NotNull ChanceBoostFunction function) {
         this.chanceFunction = chanceFunction;
         return this;
     }
